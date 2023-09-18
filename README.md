@@ -1,2 +1,2 @@
 # ODE-system
-Solving differential equations
+Solving ordinary differential equations in python language
