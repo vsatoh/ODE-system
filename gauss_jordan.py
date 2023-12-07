@@ -25,6 +25,26 @@ def calculaInversa(n, a, b):
                     a[j][k] -= lbd*a[i][k]
                     b[j][k] -= lbd*b[i][k]
                     
+def matrix_diagonalization(n, a):
+    #reset bellow the diagonal
+    for i in range(n-1):
+        pivo = a[i][i]
+        c = 1/pivo
+        aux = a[i+1][i]
+        c = aux*c
+        for j in range(n):
+            a[i+1][j] = a[i+1][j] - a[i][j]*c
+
+
+    for i in range(n-1,0, -1):
+        pivo = a[i][i]
+        c = 1/pivo
+        aux = a[i-1][i]
+        c = aux*c
+        
+        for j in range(n):
+            a[i-1][j] = a[i-1][j] - a[i][j]*c
+                    
 def calculaVetor(n, matrizInversa, vetor):
     resultado = [] 
     soma = 0
@@ -35,9 +55,8 @@ def calculaVetor(n, matrizInversa, vetor):
         soma = 0
     print(resultado)
     return resultado
-                    
-
-                    
+    
+    
 n = int(input("Ordem da matriz: "))
 matrizCaracteristica = []
 matrizIdentidade = []
@@ -53,12 +72,7 @@ for i in range(n):
         matrizIdentidade[i].append(0)
     matrizIdentidade[i][i] = 1
 
-print("Vetor correspondente")
-linha = input().split()
-for i in range(n):
-    vetorCaracteristico.append(int(linha[i]))
-print(matrizCaracteristica)
-calculaInversa(n, matrizCaracteristica, matrizIdentidade)
-print(matrizCaracteristica)
-calculaVetor(n, matrizIdentidade, vetorCaracteristico)
-
+# print("Vetor correspondente")
+# linha = input().split()
+# for i in range(n):
+#     vetorCaracteristico.append(int(linha[i]))
