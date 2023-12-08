@@ -54,25 +54,27 @@ def calculaVetor(n, matrizInversa, vetor):
         resultado.append(soma)
         soma = 0
     print(resultado)
-    return resultado
     
     
-n = int(input("Ordem da matriz: "))
-matrizCaracteristica = []
-matrizIdentidade = []
-vetorCaracteristico = []
+# n = int(input("Ordem da matriz: "))
+# matrizCaracteristica = []
+# matrizIdentidade = []
+# vetorCaracteristico = []
 
-print("Matriz caracteristica")
-for i in range(n):
-    linha = input().split(" ")
-    matrizCaracteristica.append([])
-    matrizIdentidade.append([])
-    for j in range(n):
-        matrizCaracteristica[i].append(int(linha[j]))
-        matrizIdentidade[i].append(0)
-    matrizIdentidade[i][i] = 1
+# print("Matriz caracteristica")
+# for i in range(n):
+#     linha = input().split(" ")
+#     matrizCaracteristica.append([])
+#     matrizIdentidade.append([])
+#     for j in range(n):
+#         matrizCaracteristica[i].append(int(linha[j]))
+#         matrizIdentidade[i].append(0)
+#     matrizIdentidade[i][i] = 1
 
 # print("Vetor correspondente")
 # linha = input().split()
 # for i in range(n):
 #     vetorCaracteristico.append(int(linha[i]))
+    
+# calculaInversa(n, matrizCaracteristica, matrizIdentidade)
+# calculaVetor(n, matrizIdentidade, vetorCaracteristico)
