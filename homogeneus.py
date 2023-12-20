@@ -1,18 +1,8 @@
 #recebe a matriz A -> calcular autovalores
 #Para cada autovalor, encontrar autovetor
-import numpy as np
-from gauss_jordan import calculaInversa
-from gauss_jordan import calculaVetor
+from gauss_jordan import gauss_jordan_method
 from matrix_operations import matrix_product
 from matrix_operations import matrix_copy
-
-def calcular_determinante(matriz):
-    # Converter a lista de listas em uma matriz NumPy
-    matriz_np = np.array(matriz)
-
-    # Calcular o determinante usando a função det() do NumPy
-    determinante = np.linalg.det(matriz_np)
-    return determinante
 
 def submatrix(matrix, row, col):
     """Retorna a submatriz excluindo a linha 'row' e a coluna 'col'."""
@@ -128,21 +118,43 @@ def eigenvalue_multiplicity(matrix, n):
             k+=1
     return 1 + eigenvalue_multiplicity(n_matrix, n-1)
 
-def eigenvector_finder(eigenvalue, matrix_A, n):
-    matrix_A_copy = []
-    #salvar a matriz_A em algum lugar
-    matrix_copy(matrix_A, matrix_A_copy, n)
+def eigenvector_finder_case1(matrix, n, result_vector):
+    aux1 = True
+    for i in range(n-1):
+        for j in range(i+1, n):
+            if aux1 == True:
+                pivo = matrix[i][0]/matrix[j][0]
+                aux2 = True
+                k = 1
+                while aux2:
+                    a = matrix[i][k]
+                    b = matrix[j][k]
+                    if a != 0 and b != 0:
+                        lbda = a/b
+                        if lbda != pivo:
+                            aux2 = False
+                    if k == n-1:
+                        ind1 = i
+                        aux2 = False
+                        aux1 = False
+                    k += 1
+    n_matrix = []
+    result_vector.append(1)
+    value_vector = []
+    k = 0
     for i in range(n):
-        matrix_A_copy[i][i] -= eigenvalue
-    eigenvector = []
-    for i in range(n):
-        eigenvector.append(1)
-
+        if i != ind1:
+            n_matrix.append([])
+            value_vector.append(-1*matrix[i][0])
+            for j  in range(1,n):
+                n_matrix[k].append(matrix[i][j])
+            k+=1
+        
+    gauss_jordan_method(n_matrix, value_vector, result_vector, n-1)
 
 
 n = int(input("Ordem da matriz: "))
 matrizCaracteristica = []
-matrizIdentidade = []
 vetorCaracteristico = []
 eigenvalue_list = []
 
@@ -150,11 +162,18 @@ print("Matriz caracteristica")
 for i in range(n):
     linha = input().split(" ")
     matrizCaracteristica.append([])
-    matrizIdentidade.append([])
     for j in range(n):
         matrizCaracteristica[i].append(int(linha[j]))
-        matrizIdentidade[i].append(0)
-    matrizIdentidade[i][i] = 1
     
 eigenvalue_finder(n, matrizCaracteristica, eigenvalue_list)
 print(eigenvalue_list)
+
+for eign in eigenvalue_list:
+    matrix_copy_A = []
+    result_vector = []
+    matrix_copy(matrizCaracteristica, matrix_copy_A, n)
+    
+    for i in range(n):
+        matrix_copy_A[i][i] -= eign
+        
+    eigenvector_finder_case1(matrix_copy_A, n, result_vector)

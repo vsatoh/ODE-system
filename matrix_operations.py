@@ -1,3 +1,4 @@
+
 def matrix_product(MA, MB, MC, n):
     #MA: Matrix A
     #MB: Matrix B
